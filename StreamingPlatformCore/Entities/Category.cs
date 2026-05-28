@@ -1,15 +1,19 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StreamingPlatformCore.Entities;
 
+/// <summary>
+/// Represents category of live stream
+/// </summary>
 public class Category
 {
+    [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int Id { get; private set; }
-    public string Name { get; private set; }
+    public int Id { get; set; }
 
-    public Category(string name)
-    {
-        Name = name;
-    }
+    [Required]
+    public string Name { get; set; }
+
+    public string Description { get; set; }
 }

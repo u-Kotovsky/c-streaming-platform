@@ -3,20 +3,25 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StreamingPlatformCore.Entities;
 
+/// <summary>
+/// Represents user in the system, can own multiple stream channels, send messages, donations and make subscriptions
+/// </summary>
 public class User
 {
+    [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int Id { get; private set; }
-    [Required]
-    public string Login { get; private set; }
-    [Required]
-    public string Password { get; private set; } // who cares about securite
-    public DateTime CreatedAt { get; private set; }
+    public int Id { get; set; }
 
-    public User(string login, string password)
-    {
-        CreatedAt = DateTime.UtcNow;
-        Login = login;
-        Password = password;
-    }
+    [Required]
+    public string Username { get; set; }
+
+    [Required]
+    public string Password { get; set; } // who cares about security
+
+    public DateTime CreatedAt { get; set; }
+
+    public virtual ICollection<Subscription> Subscriptions { get; set; }
+    public virtual ICollection<Donation> Donations { get; set; }
+    public virtual ICollection<ChatMessage> ChatMessages { get; set; }
+    public virtual ICollection<StreamChannel> OwnedChannels { get; set; }
 }

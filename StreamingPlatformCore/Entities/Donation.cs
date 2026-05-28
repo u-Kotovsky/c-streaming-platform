@@ -1,14 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StreamingPlatformCore.Entities;
 
 /// <summary>
-/// Represents chat message in the live stream from a user
+/// Represents donation to the live stream
 /// </summary>
-public class ChatMessage
+public class Donation
 {
-    [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
 
@@ -16,12 +14,14 @@ public class ChatMessage
     public int UserId { get; set; }
     public virtual User User { get; set; }
 
+
     [ForeignKey(nameof(LiveStream))]
     public int LiveStreamId { get; set; }
     public virtual LiveStream LiveStream { get; set; }
 
-    [Required]
-    public string Content { get; set; }
+    public decimal Amount { get; set; }
 
-    public DateTime CreatedAt { get; set; }
+    public string Message { get; set; }
+
+    public DateTime DonationDate { get; set; }
 }

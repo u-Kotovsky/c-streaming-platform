@@ -12,7 +12,7 @@ namespace StreamingPlatformCore
         public DbSet<StreamChannel> StreamChannels { get; set; }
         public DbSet<LiveStream> LiveStreams { get; set; }
         public DbSet<Subscription> Subscriptions { get; set; }
-        public DbSet<Donate> Donates { get; set; }
+        public DbSet<Donation> Donates { get; set; }
         public DbSet<ChatMessage> ChatMessages { get; set; }
         public DbSet<Category> Categories { get; set; }
         public static bool ForceInMemory { get; set; }
@@ -34,15 +34,14 @@ namespace StreamingPlatformCore
         }
         #endregion
 
-        public void Destroy()
+        public override void Dispose()
         {
             _instance = null;
-            Dispose();
+            base.Dispose();
         }
 
         private void AddTestValues()
-        { 
-
+        {
             SaveChanges();
         }
 
@@ -89,6 +88,27 @@ namespace StreamingPlatformCore
             {
                 optionsBuilder.UseSqlServer(@"Server=172.16.1.101,33678;Database=levchenko;User Id=Levchenko;Password=MNroqW(;TrustServerCertificate=True;Trusted_Connection=False;");
             }
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Subscription>()
+                .HasOne(s => s.User)
+                .WithMany(u => u.Subscriptions)
+                .HasForeignKey(s => s.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Subscription>()
+                .HasOne(s => s.Channel)
+                .WithMany(c => c.Subscriptions)
+                .HasForeignKey(s => s.StreamChannelId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Donation>()
+                .HasOne(d => d.User)
+                .WithMany(u => u.Donations)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

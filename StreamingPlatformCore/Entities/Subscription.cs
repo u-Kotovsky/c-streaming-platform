@@ -1,25 +1,28 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StreamingPlatformCore.Entities;
 
+/// <summary>
+/// Represents paid subscription to the channel for specific duration
+/// </summary>
 public class Subscription
 {
+    [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int Id { get; private set; }
-    public int UserId { get; private set; }
-    public int StreamChannelId { get; private set; }
-    public DateTime SubscribedAt { get; private set; }
+    public int Id { get; set; }
 
-    [ForeignKey(nameof(UserId))]
-    public User User { get; private set; }
+    [ForeignKey(nameof(User))]
+    public int UserId { get; set; }
+    public virtual User User { get; set; }
 
-    [ForeignKey(nameof(StreamChannelId))]
-    public StreamChannel StreamChannel { get; private set; }
+    [ForeignKey(nameof(Channel))]
+    public int StreamChannelId { get; set; }
+    public virtual StreamChannel Channel { get; set; }
 
-    public Subscription(int userId, int streamChannelId)
-    {
-        SubscribedAt = DateTime.UtcNow;
-        UserId = userId;
-        StreamChannelId = streamChannelId;
-    }
+    public DateTime StartDate { get; set; }
+    public DateTime EndDate { get; set; }
+    public decimal Price { get; set; }
+
+    public bool IsActive => DateTime.UtcNow >= StartDate && DateTime.UtcNow <= EndDate;
 }
