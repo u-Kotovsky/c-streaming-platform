@@ -42,7 +42,25 @@ namespace StreamingPlatformCore
 
         private void AddTestValues()
         {
-            SaveChanges();
+            for (int i = 0; i < 32; i++)
+            {
+                var user = new User($"{i}", "password");
+                Users.Add(user);
+                SaveChanges();
+                var streamChannel = new StreamChannel($"{i}", "", user.Id);
+                StreamChannels.Add(streamChannel);
+                SaveChanges();
+                var liveStream = new LiveStream()
+                {
+                    Title = $"{i}",
+                    StreamChannelId = streamChannel.Id,
+                    StartDate = DateTime.Now,
+                    Duration = TimeSpan.FromHours(i),
+                    Status = LiveStreamStatus.Scheduled
+                };
+                LiveStreams.Add(liveStream);
+                SaveChanges();
+            }
         }
 
         private ApplicationContext()

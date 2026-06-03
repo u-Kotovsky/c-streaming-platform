@@ -34,7 +34,7 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Grid Width="128" Height="200" Margin="4">
-                                <control:StreamChannelMiniature Title="{Binding Path=Title}" Description="{Binding Path=Description}"/>
+                                <control:StreamChannelMiniature Title="{Binding Path=Name}" Description="{Binding Path=Description}"/>
                             </Grid>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
@@ -45,6 +45,22 @@
         </Grid>
         <Grid Grid.Row="1">
 
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Visible">
+                <ItemsControl ItemsSource="{Binding Path=LiveStreams}" ScrollViewer.VerticalScrollBarVisibility="Visible">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel FlowDirection="LeftToRight"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Width="128" Height="200" Margin="4">
+                                <control:StreamChannelMiniature Title="{Binding Path=Title}" Description="{Binding Path=Description}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
         </Grid>
     </Grid>
 </Page>

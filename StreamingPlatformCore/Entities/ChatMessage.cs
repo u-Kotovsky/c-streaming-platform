@@ -24,4 +24,9 @@ public class ChatMessage
     public string Content { get; set; }
 
     public DateTime CreatedAt { get; set; }
+    public ChatMessage(int userId, string content)
+    {
+        UserId = userId;
+        Content = content;
+    }
 }

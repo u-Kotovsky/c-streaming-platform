@@ -8,6 +8,12 @@ namespace StreamingPlatformCore.Entities;
 /// </summary>
 public class Subscription
 {
+    public Subscription(int userId, int streamChannelId)
+    {
+        UserId = userId;
+        StreamChannelId = streamChannelId;
+    }
+
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }

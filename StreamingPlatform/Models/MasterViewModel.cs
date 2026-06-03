@@ -1,4 +1,7 @@
-﻿using StreamingPlatform.Helpers;
+﻿using System.Windows;
+using StreamingPlatform.Helpers;
+using StreamingPlatformCore;
+using StreamingPlatformCore.Entities;
 
 namespace StreamingPlatform.Models;
 
@@ -9,13 +12,22 @@ internal class MasterViewModel : NotifablePropertyChanged
 {
     private readonly MainWindow _mainWindow;
 
+    private readonly ApplicationContext _context;
+
     /// <summary>
     /// Main constructor
     /// </summary>
     public MasterViewModel()
     {
         _mainWindow = MainWindow.GetInstance();
+        _context = ApplicationContext.GetInstance();
+
+        StreamChannels = _context.StreamChannels.ToList();
+        LiveStreams = _context.LiveStreams.ToList();
     }
+
+    public List<StreamChannel> StreamChannels { get; set; }
+    public List<LiveStream> LiveStreams { get; set; }
 
     #region Commands
     private RelayCommand? _showCatalogCommand;

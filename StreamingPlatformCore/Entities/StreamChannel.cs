@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace StreamingPlatformCore.Entities;
 
@@ -28,6 +29,13 @@ public class StreamChannel
 
     public virtual ICollection<LiveStream> LiveStreams { get; set; }
     public virtual ICollection<Subscription> Subscriptions { get; set; }
+
+    public StreamChannel(string name, string description, int authorId)
+    {
+        Name = name;
+        Description = description;
+        AuthorId = authorId;
+    }
 
     /// <summary>
     /// Calculate revenue of the channel

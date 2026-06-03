@@ -24,4 +24,10 @@ public class User
     public virtual ICollection<Donation> Donations { get; set; }
     public virtual ICollection<ChatMessage> ChatMessages { get; set; }
     public virtual ICollection<StreamChannel> OwnedChannels { get; set; }
+
+    public User(string username, string password)
+    {
+        Username = username;
+        Password = password;
+    }
 }
