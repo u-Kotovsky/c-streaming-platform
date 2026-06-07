@@ -15,7 +15,8 @@ public class StreamChannel
 
     [Required]
     public string Name { get; set; }
-    public string Description { get; set; }
+    public string Title { get => Name; set { Name = value; } }
+    public string Description { get; set; } = string.Empty;
 
     [ForeignKey(nameof(Author))]
     public int AuthorId { get; set; }

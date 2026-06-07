@@ -16,16 +16,15 @@ namespace StreamingPlatformCore
         public DbSet<ChatMessage> ChatMessages { get; set; }
         public DbSet<Category> Categories { get; set; }
         public static bool ForceInMemory { get; set; }
-        public static bool InsertTestValues { get; set; }
 
         #region Singleton stuff
         private static ApplicationContext? _instance;
-        public static ApplicationContext GetInstance()
+        public static ApplicationContext GetInstance(bool forceInMemory = false, bool insertTestValues = false)
         {
             if (_instance == null)
             {
-                _instance = new ApplicationContext();
-                if (InsertTestValues)
+                _instance = new ApplicationContext(forceInMemory);
+                if (insertTestValues)
                 {
                     _instance.AddTestValues();
                 }
@@ -44,15 +43,15 @@ namespace StreamingPlatformCore
         {
             for (int i = 0; i < 32; i++)
             {
-                var user = new User($"{i}", "password");
+                var user = new User($"user-{i}", "password");
                 Users.Add(user);
                 SaveChanges();
-                var streamChannel = new StreamChannel($"{i}", "", user.Id);
+                var streamChannel = new StreamChannel($"streamchannel-{i}", "", user.Id);
                 StreamChannels.Add(streamChannel);
                 SaveChanges();
                 var liveStream = new LiveStream()
                 {
-                    Title = $"{i}",
+                    Title = $"livestream-{i}",
                     StreamChannelId = streamChannel.Id,
                     StartDate = DateTime.Now,
                     Duration = TimeSpan.FromHours(i),
@@ -63,11 +62,11 @@ namespace StreamingPlatformCore
             }
         }
 
-        private ApplicationContext()
+        private ApplicationContext(bool forceInMemory = false)
         {
+            ForceInMemory = forceInMemory;
 #if DEBUG
             ForceInMemory = true;
-            InsertTestValues = true;
             Database.EnsureDeleted();
             Database.EnsureCreated();
 #endif
@@ -100,7 +99,7 @@ namespace StreamingPlatformCore
         {
             if (ForceInMemory)
             {
-                optionsBuilder.UseInMemoryDatabase("db");
+                optionsBuilder.UseInMemoryDatabase(Guid.NewGuid().ToString());
             }
             else
             {

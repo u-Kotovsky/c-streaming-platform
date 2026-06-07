@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:StreamingPlatform.UIElements"
              mc:Ignorable="d" 
-             d:DesignHeight="180" d:DesignWidth="128">
+             d:DesignHeight="24" d:DesignWidth="128">
     <UserControl.Resources>
         <Style x:Key="MovieCardStyle" TargetType="Border">
             <Setter Property="BorderBrush" Value="Black"/>
@@ -17,15 +17,16 @@
         <Border Style="{StaticResource MovieCardStyle}">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="3*" />
-                    <RowDefinition Height="auto"/>
+                    <!--<RowDefinition Height="3*" />
+                    <RowDefinition Height="auto"/>-->
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Rectangle Grid.Row="0" Width="128" Height="128" Fill="LightGray" VerticalAlignment="Top"/>
-                <!--<Image Grid.Row="0" Source="{Binding Path=Image}"/>-->
-                <TextBlock Grid.Row="1" Text="{Binding Path=Title}" FontSize="12" Margin="4 0 4 0"/>
+                <!--<Rectangle Grid.Row="0" Width="128" Height="128" Fill="LightGray" VerticalAlignment="Top"/>-->
+                    <!--<Image Grid.Row="0" Source="{Binding Path=Image}"/>-->
+                <TextBlock Grid.Row="0" Text="{Binding Path=Title}" FontSize="12" Margin="4 0 4 0"/>
             </Grid>
         </Border>
     </Grid>

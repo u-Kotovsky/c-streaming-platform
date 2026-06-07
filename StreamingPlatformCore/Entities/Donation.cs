@@ -21,7 +21,15 @@ public class Donation
 
     public decimal Amount { get; set; }
 
-    public string Message { get; set; }
+    public string Message { get; set; } = string.Empty;
 
     public DateTime DonationDate { get; set; }
+
+    public Donation(int userId, int liveStreamId, decimal amount)
+    {
+        DonationDate = DateTime.UtcNow;
+        UserId = userId;
+        LiveStreamId = liveStreamId;
+        Amount = amount;
+    }
 }

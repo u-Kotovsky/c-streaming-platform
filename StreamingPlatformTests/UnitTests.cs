@@ -13,50 +13,50 @@ namespace StreamingPlatformTests
         [SetUp]
         public void Setup()
         {
-            var options = new DbContextOptionsBuilder<ApplicationContext>()
-                .UseInMemoryDatabase(databaseName: "TestStreamingDB")
-                .Options;
-
-            _context = ApplicationContext.GetInstance();
+            _context = ApplicationContext.GetInstance(true, false);
             _reportService = new ChannelReportService();
+            //_context.Database.EnsureDeleted();
+            _context.Database.EnsureCreated();
 
-            SeedTestData();
+            SendTestData();
         }
 
         [TearDown]
         public void Destruct()
         {
+            //_context.Database.EnsureDeleted();
             _context.Dispose();
+            _context = null;
         }
 
-        private void SeedTestData()
+        private void SendTestData()
         {
             // Создаём тестовые данные
-            var user = new User { Username = "testuser", Password = "test" };
-            var category = new Category { Name = "Gaming" };
-            var channel = new StreamChannel
-            {
-                Name = "Test Channel",
-                Author = user,
+            var user = new User("testuser", "test");
+            var category = new Category("Gaming", "gaming");
+
+            _context.Categories.Add(category);
+            _context.Users.Add(user);
+
+            _context.SaveChanges();
+
+            var channel = new StreamChannel("Test Channel", "", user.Id)
+            { 
                 Category = category,
                 SubscriberCount = 100
             };
 
             // Создаём активную подписку
-            var activeSubscription = new Subscription
+            var activeSubscription = new Subscription(user.Id, channel.Id)
             {
-                User = user,
-                Channel = channel,
                 StartDate = DateTime.Now.AddDays(-15),
                 EndDate = DateTime.Now.AddDays(15),
                 Price = 9.99m
             };
 
             // Создаём неактивную подписку
-            var inactiveSubscription = new Subscription
+            var inactiveSubscription = new Subscription(user.Id, channel.Id)
             {
-                User = user,
-                Channel = channel,
                 StartDate = DateTime.Now.AddDays(-45),
                 EndDate = DateTime.Now.AddDays(-15),
                 Price = 9.99m
@@ -82,19 +82,17 @@ namespace StreamingPlatformTests
             };
 
             // Создаём донаты
-            var donation1 = new Donation
+            var donation1 = new Donation(user.Id, stream1.Id, 25m)
             {
                 User = user,
                 LiveStream = stream1,
-                Amount = 25.00m,
                 DonationDate = DateTime.Now.AddDays(-5)
             };
 
-            var donation2 = new Donation
+            var donation2 = new Donation(user.Id, stream2.Id, 50m)
             {
                 User = user,
                 LiveStream = stream2,
-                Amount = 50.00m,
                 DonationDate = DateTime.Now.AddDays(-3)
             };
 
@@ -103,12 +101,9 @@ namespace StreamingPlatformTests
             stream1.Donations = new List<Donation> { donation1 };
             stream2.Donations = new List<Donation> { donation2 };
 
-            _context.Users.Add(user);
-            _context.Categories.Add(category);
             _context.StreamChannels.Add(channel);
             _context.SaveChanges();
         }
-
 
         [Test]
         public void Test_CalculateChannelRevenue()
@@ -125,7 +120,8 @@ namespace StreamingPlatformTests
 
             // Assert
             // Доход должен быть: 9.99 (активная подписка) + 25.00 + 50.00 (донаты) = 84.99
-            Assert.AreEqual(84.99m, revenue);
+            Assert.AreEqual(84.99m, revenue, 
+                $"{channel.Subscriptions.Count} {channel.LiveStreams.Count} {channel.SubscriberCount} {_context.StreamChannels.Count()}");
         }
 
         [Test]
@@ -171,11 +167,18 @@ namespace StreamingPlatformTests
         public void Test_EmptyChannelReport()
         {
             // Arrange
-            var emptyChannel = new StreamChannel
+            var user = new User("emptyuser", "");
+            _context.Users.Add(user);
+            _context.SaveChanges();
+
+            var category = new Category("Other", "desc");
+            _context.Categories.Add(category);
+            _context.SaveChanges();
+
+            var emptyChannel = new StreamChannel("Empty Channel", "desc", user.Id)
             {
-                Name = "Empty Channel",
-                Author = new User { Username = "emptyuser" },
-                Category = new Category { Name = "Other" }
+                Category = category,
+                CategoryId = category.Id
             };
             _context.StreamChannels.Add(emptyChannel);
             _context.SaveChanges();
@@ -188,10 +191,5 @@ namespace StreamingPlatformTests
             Assert.AreEqual(0, report.AverageDuration);
             Assert.AreEqual(0m, report.TotalRevenue);
         }
-
-        // TODO: calc stream channel income
-        // TODO: check subscription
-        // todo: check average duration (of live stream?)
-        // todo: report generation
     }
 }
