@@ -15,7 +15,6 @@ namespace StreamingPlatformTests
         {
             _context = ApplicationContext.GetInstance(true, false);
             _reportService = new ChannelReportService();
-            //_context.Database.EnsureDeleted();
             _context.Database.EnsureCreated();
 
             SendTestData();
@@ -24,7 +23,6 @@ namespace StreamingPlatformTests
         [TearDown]
         public void Destruct()
         {
-            //_context.Database.EnsureDeleted();
             _context.Dispose();
             _context = null;
         }
@@ -37,7 +35,6 @@ namespace StreamingPlatformTests
 
             _context.Categories.Add(category);
             _context.Users.Add(user);
-
             _context.SaveChanges();
 
             var channel = new StreamChannel("Test Channel", "", user.Id)
@@ -120,8 +117,7 @@ namespace StreamingPlatformTests
 
             // Assert
             // Доход должен быть: 9.99 (активная подписка) + 25.00 + 50.00 (донаты) = 84.99
-            Assert.AreEqual(84.99m, revenue, 
-                $"{channel.Subscriptions.Count} {channel.LiveStreams.Count} {channel.SubscriberCount} {_context.StreamChannels.Count()}");
+            Assert.AreEqual(84.99m, revenue);
         }
 
         [Test]
