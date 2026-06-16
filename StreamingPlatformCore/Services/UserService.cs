@@ -9,7 +9,12 @@ public class UserService
 
     public UserService()
     {
-        _context = ApplicationContext.GetInstance();
+        _context = ApplicationContext.GetInstance(
+#if DEBUG
+                true, true
+                #else
+#endif
+                );
 
         if (_context.Users.Any())
         {

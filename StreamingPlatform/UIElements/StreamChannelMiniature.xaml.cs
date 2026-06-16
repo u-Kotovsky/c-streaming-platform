@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using StreamingPlatform.Helpers;
+using StreamingPlatform.Models;
 
 namespace StreamingPlatform.UIElements
 {
@@ -82,7 +83,11 @@ namespace StreamingPlatform.UIElements
         {
             get
             {
-                return interact ??= new RelayCommand((obj) => OnInteract?.Invoke(this));
+                return interact ??= new RelayCommand((obj) =>
+                {
+                    ((InteractableModel)DataContext).InteractWithModel();
+                    //OnInteract?.Invoke(this);
+                });
             }
             set
             {
@@ -90,7 +95,7 @@ namespace StreamingPlatform.UIElements
             }
         }
 
-        public event Action<StreamChannelMiniature> OnInteract = delegate {};
+        //public event Action<StreamChannelMiniature> OnInteract = delegate {};
 
         /// <summary>
         /// Constructor

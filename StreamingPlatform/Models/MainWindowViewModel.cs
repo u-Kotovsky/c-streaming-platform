@@ -44,7 +44,12 @@ internal class MainWindowViewModel : NotifablePropertyChanged
                 ((ThrobberViewModel)_throbber.DataContext).Message = "Подключение..";
             });
 
-            _context = ApplicationContext.GetInstance();
+            _context = ApplicationContext.GetInstance(
+#if DEBUG
+                true, true
+                #else
+#endif
+                );
         }
         catch (Exception ex)
         {

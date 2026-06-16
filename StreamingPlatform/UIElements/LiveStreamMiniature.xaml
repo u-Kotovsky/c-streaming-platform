@@ -6,7 +6,28 @@
              xmlns:local="clr-namespace:StreamingPlatform.UIElements"
              mc:Ignorable="d" 
              d:DesignHeight="24" d:DesignWidth="128">
+    <UserControl.Resources>
+        <Style x:Key="MovieCardStyle" TargetType="Border">
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="CornerRadius" Value="4"/>
+        </Style>
+    </UserControl.Resources>
     <Grid>
-            
+        <Border Style="{StaticResource MovieCardStyle}">
+            <Grid>
+                <Grid.InputBindings>
+                    <MouseBinding Gesture="LeftClick" Command="{Binding Interact}"/>
+                </Grid.InputBindings>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Text="{Binding Path=Title}" FontSize="12" Margin="4 0 4 0"
+                           VerticalAlignment="Center"/>
+            </Grid>
+        </Border>
     </Grid>
 </UserControl>

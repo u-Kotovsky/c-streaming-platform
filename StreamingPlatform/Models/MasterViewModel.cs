@@ -22,12 +22,24 @@ internal class MasterViewModel : NotifablePropertyChanged
         _mainWindow = MainWindow.GetInstance();
         _context = ApplicationContext.GetInstance();
 
-        StreamChannels = _context.StreamChannels.ToList();
-        LiveStreams = _context.LiveStreams.ToList();
+        PopulateLists();
     }
 
-    public List<StreamChannel> StreamChannels { get; set; }
-    public List<LiveStream> LiveStreams { get; set; }
+    private void PopulateLists()
+    {
+        var streamChannels = _context.StreamChannels.ToList();
+        var liveStreams = _context.LiveStreams.ToList();
+
+        var streamChannels2 = StreamChannelModel.From(streamChannels);
+        var liveStreams2 = LiveStreamModel.From(liveStreams);
+
+        StreamChannels = streamChannels2;
+        LiveStreams = liveStreams2;
+
+    }
+
+    public List<StreamChannelModel> StreamChannels { get; set; }
+    public List<LiveStreamModel> LiveStreams { get; set; }
 
     #region Commands
     private RelayCommand? _showCatalogCommand;
