@@ -16,15 +16,16 @@ namespace StreamingPlatformCore
         public DbSet<ChatMessage> ChatMessages { get; set; }
         public DbSet<Category> Categories { get; set; }
         public static bool ForceInMemory { get; set; }
+        public static bool InsertTestValues { get; set; }
 
         #region Singleton stuff
         private static ApplicationContext? _instance;
-        public static ApplicationContext GetInstance(bool forceInMemory = false, bool insertTestValues = false)
+        public static ApplicationContext GetInstance()
         {
             if (_instance == null)
             {
-                _instance = new ApplicationContext(forceInMemory);
-                if (insertTestValues)
+                _instance = new ApplicationContext(ForceInMemory);
+                if (InsertTestValues)
                 {
                     _instance.AddTestValues();
                 }
@@ -64,11 +65,15 @@ namespace StreamingPlatformCore
 
         private ApplicationContext(bool forceInMemory = false)
         {
-            ForceInMemory = forceInMemory;
+            ForceInMemory =
 #if DEBUG
+                true;
             ForceInMemory = true;
+            InsertTestValues = true;
             Database.EnsureDeleted();
             Database.EnsureCreated();
+#else
+            forceInMemory;
 #endif
         }
 

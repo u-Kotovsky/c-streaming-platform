@@ -11,16 +11,21 @@
 
     <Grid Margin="4">
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <!-- Have a list of stream channels -->
         <!-- Have a list of live streams -->
         <!-- be able to select channel and do actions with it? -->
 
         <Grid Grid.Row="0">
-            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Visible">
-                <ItemsControl ItemsSource="{Binding Path=StreamChannels}" ScrollViewer.VerticalScrollBarVisibility="Visible">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock>Список каналов</TextBlock>
+            <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Visible">
+                <ItemsControl ItemsSource="{Binding Path=StreamChannels}" ScrollViewer.HorizontalScrollBarVisibility="Visible">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <WrapPanel FlowDirection="LeftToRight"/>
@@ -28,20 +33,22 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Grid Width="128" Height="200" Margin="4">
+                            <Grid Width="128" Height="32" Margin="4">
                                 <control:StreamChannelMiniature Title="{Binding Path=Name}" Description="{Binding Path=Description}"/>
                             </Grid>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </ScrollViewer>
-            
-            
         </Grid>
-        <Grid Grid.Row="1">
-
-            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Visible">
-                <ItemsControl ItemsSource="{Binding Path=LiveStreams}" ScrollViewer.VerticalScrollBarVisibility="Visible">
+        <Grid Grid.Row="1" Margin="0 8 0 0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock>Список трансляций</TextBlock>
+            <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Visible">
+                <ItemsControl ItemsSource="{Binding Path=LiveStreams}" ScrollViewer.HorizontalScrollBarVisibility="Visible">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <WrapPanel FlowDirection="LeftToRight"/>
@@ -49,7 +56,7 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Grid Width="128" Height="200" Margin="4">
+                            <Grid Width="128" Height="32" Margin="4">
                                 <control:StreamChannelMiniature Title="{Binding Path=Title}" Description="{Binding Path=Description}"/>
                             </Grid>
                         </DataTemplate>

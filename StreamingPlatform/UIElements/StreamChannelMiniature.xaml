@@ -16,17 +16,17 @@
     <Grid>
         <Border Style="{StaticResource MovieCardStyle}">
             <Grid>
+                <Grid.InputBindings>
+                    <MouseBinding Gesture="LeftClick" Command="{Binding Interact}"/>
+                </Grid.InputBindings>
                 <Grid.RowDefinitions>
-                    <!--<RowDefinition Height="3*" />
-                    <RowDefinition Height="auto"/>-->
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <!--<Rectangle Grid.Row="0" Width="128" Height="128" Fill="LightGray" VerticalAlignment="Top"/>-->
-                    <!--<Image Grid.Row="0" Source="{Binding Path=Image}"/>-->
-                <TextBlock Grid.Row="0" Text="{Binding Path=Title}" FontSize="12" Margin="4 0 4 0"/>
+                <TextBlock Grid.Row="0" Text="{Binding Path=Title}" FontSize="12" Margin="4 0 4 0"
+                           VerticalAlignment="Center"/>
             </Grid>
         </Border>
     </Grid>

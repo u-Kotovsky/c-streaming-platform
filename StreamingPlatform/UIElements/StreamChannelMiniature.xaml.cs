@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using StreamingPlatform.Helpers;
 
 namespace StreamingPlatform.UIElements
 {
@@ -75,6 +76,21 @@ namespace StreamingPlatform.UIElements
             }
         }
         #endregion
+
+        private RelayCommand interact;
+        public RelayCommand Interact
+        {
+            get
+            {
+                return interact ??= new RelayCommand((obj) => OnInteract?.Invoke(this));
+            }
+            set
+            {
+                // ignore
+            }
+        }
+
+        public event Action<StreamChannelMiniature> OnInteract = delegate {};
 
         /// <summary>
         /// Constructor
