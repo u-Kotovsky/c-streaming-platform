@@ -2,5 +2,5 @@
 
 internal interface InteractableModel
 {
-    public void InteractWithModel();
+    public void Interact();
 }

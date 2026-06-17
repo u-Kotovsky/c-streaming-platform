@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel;
+using System.Reflection.Emit;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using StreamingPlatform.Helpers;
 using StreamingPlatform.Models;
@@ -85,7 +87,7 @@ namespace StreamingPlatform.UIElements
             {
                 return interact ??= new RelayCommand((obj) =>
                 {
-                    ((InteractableModel)DataContext).InteractWithModel();
+                    ((InteractableModel)DataContext).Interact();
                     MessageBox.Show($"core interact!");
                     //OnInteract?.Invoke(this);
                 });

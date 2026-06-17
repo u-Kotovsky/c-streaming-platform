@@ -14,10 +14,10 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <!-- Have a list of stream channels -->
-        <!-- Have a list of live streams -->
+        
         <!-- be able to select channel and do actions with it? -->
 
+        <!-- StreamChannel List -->
         <Grid Grid.Row="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
@@ -41,6 +41,8 @@
                 </ItemsControl>
             </ScrollViewer>
         </Grid>
+        
+        <!-- LiveStream list -->
         <Grid Grid.Row="1" Margin="0 8 0 0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>

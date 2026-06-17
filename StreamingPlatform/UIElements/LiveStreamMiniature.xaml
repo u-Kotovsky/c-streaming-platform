@@ -15,16 +15,19 @@
     </UserControl.Resources>
     <Grid>
         <Border Style="{StaticResource MovieCardStyle}">
-            <Grid>
+            <Grid Background="Transparent">
                 <Grid.InputBindings>
-                    <MouseBinding Gesture="LeftClick" Command="{Binding Interact}"/>
+                    <MouseBinding Gesture="LeftClick" Command="{Binding Interact}" CommandParameter="{Binding}"/>
                 </Grid.InputBindings>
+                
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
+                
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
+                
                 <TextBlock Grid.Row="0" Text="{Binding Path=Title}" FontSize="12" Margin="4 0 4 0"
                            VerticalAlignment="Center"/>
             </Grid>

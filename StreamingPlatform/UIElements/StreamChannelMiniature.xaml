@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:StreamingPlatform.UIElements"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviours"
              mc:Ignorable="d" 
              d:DesignHeight="24" d:DesignWidth="128">
     <UserControl.Resources>
@@ -15,9 +16,9 @@
     </UserControl.Resources>
     <Grid>
         <Border Style="{StaticResource MovieCardStyle}">
-            <Grid>
+            <Grid Background="Transparent">
                 <Grid.InputBindings>
-                    <MouseBinding Gesture="LeftClick" Command="{Binding Interact}"/>
+                    <MouseBinding Gesture="LeftClick" Command="{Binding Interact}" CommandParameter="{Binding}"/>
                 </Grid.InputBindings>
                 
                 <Grid.RowDefinitions>

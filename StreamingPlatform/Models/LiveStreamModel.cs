@@ -37,7 +37,7 @@ namespace StreamingPlatform.Models
             return list;
         }
 
-        public void InteractWithModel()
+        public void Interact()
         {
             OnInteract?.Invoke(this);
         }
