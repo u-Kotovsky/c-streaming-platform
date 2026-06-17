@@ -19,6 +19,7 @@
                 <Grid.InputBindings>
                     <MouseBinding Gesture="LeftClick" Command="{Binding Interact}"/>
                 </Grid.InputBindings>
+                
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>

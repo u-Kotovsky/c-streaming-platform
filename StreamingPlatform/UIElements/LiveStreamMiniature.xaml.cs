@@ -85,6 +85,7 @@ namespace StreamingPlatform.UIElements
             {
                 return interact ??= new RelayCommand((obj) =>
                 {
+                    MessageBox.Show($"core interact!");
                     ((InteractableModel)DataContext).InteractWithModel();
                     //OnInteract?.Invoke(this);
                 });
