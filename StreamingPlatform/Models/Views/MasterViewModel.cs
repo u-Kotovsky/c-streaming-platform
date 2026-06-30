@@ -2,7 +2,6 @@
 using System.Windows;
 using System.Windows.Input;
 using StreamingPlatform.Helpers;
-using StreamingPlatform.Views;
 using StreamingPlatformCore;
 using StreamingPlatformCore.Entities;
 using StreamingPlatformCore.Services;
