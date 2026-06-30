@@ -1,7 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using StreamingPlatform.Helpers;
 using StreamingPlatformCore;
-using StreamingPlatformCore.Entities;
 
 namespace StreamingPlatform.Models
 {
