@@ -1,0 +1,20 @@
+﻿<Window x:Class="StreamingPlatform.Views.DonateWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Отправить донат" Height="260" Width="350"
+        ResizeMode="NoResize" WindowStartupLocation="CenterOwner"
+        Background="{StaticResource BackgroundBrush}">
+    <Grid Margin="20">
+        <StackPanel>
+            <TextBlock Text="Донат стриму" FontSize="18" FontWeight="Bold" Margin="0,0,0,15"/>
+            <TextBlock Text="Сумма ($)"/>
+            <TextBox Text="{Binding Amount, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,10"/>
+            <TextBlock Text="Сообщение"/>
+            <TextBox Text="{Binding Message, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,15"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="Отмена" Command="{Binding CancelCommand}" Width="80" Margin="0,0,10,0"/>
+                <Button Content="Отправить" Command="{Binding DonateCommand}" Width="100" Margin="0,0,10,0"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>

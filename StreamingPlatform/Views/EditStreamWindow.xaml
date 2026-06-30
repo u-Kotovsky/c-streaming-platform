@@ -1,0 +1,27 @@
+﻿<Window x:Class="StreamingPlatform.Views.EditStreamWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Редактировать трансляцию" Height="430" Width="420"
+        ResizeMode="NoResize" WindowStartupLocation="CenterOwner"
+        Background="{StaticResource BackgroundBrush}">
+    <Grid Margin="20">
+        <StackPanel>
+            <TextBlock Text="Редактирование трансляции" FontSize="18" FontWeight="Bold" Margin="0,0,0,15"/>
+            <TextBlock Text="Название"/>
+            <TextBox Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,10"/>
+            <TextBlock Text="Канал"/>
+            <ComboBox ItemsSource="{Binding Channels}" SelectedValue="{Binding SelectedChannelId}" 
+                      SelectedValuePath="Id" DisplayMemberPath="Name" Margin="0,0,0,10"/>
+            <TextBlock Text="Начало"/>
+            <DatePicker SelectedDate="{Binding StartDate}" Margin="0,0,0,10"/>
+            <TextBlock Text="Длительность (ч:мм:сс)"/>
+            <TextBox Text="{Binding Duration, StringFormat={}{0:hh\\:mm\\:ss}}" Margin="0,0,0,10"/>
+            <TextBlock Text="Статус"/>
+            <ComboBox ItemsSource="{Binding Statuses}" SelectedItem="{Binding Status}" Margin="0,0,0,10"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,15,0,0">
+                <Button Content="Отмена" Command="{Binding CancelCommand}" Width="80" Margin="0,0,5,0"/>
+                <Button Content="Сохранить" Command="{Binding SaveCommand}" Width="80" Margin="0,0,5,0"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>

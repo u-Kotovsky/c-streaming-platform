@@ -4,17 +4,26 @@ using StreamingPlatformCore.Entities;
 namespace StreamingPlatformCore.Services;
 
 /// <summary>
-/// Service to generate stream channel report
+/// Сервис для формирования отчёта по каналу (статистика, доходы, подписки).
 /// </summary>
 public class ChannelReportService
 {
-    private ApplicationContext _context;
+    private readonly ApplicationContext _context;
 
+    /// <summary>
+    /// Инициализирует сервис и получает контекст базы данных.
+    /// </summary>
     public ChannelReportService()
     {
         _context = ApplicationContext.GetInstance();
     }
 
+    /// <summary>
+    /// Генерирует полный отчёт по указанному каналу.
+    /// </summary>
+    /// <param name="channelId">Идентификатор канала.</param>
+    /// <returns>Объект <see cref="ChannelReport"/> с агрегированной статистикой.</returns>
+    /// <exception cref="ArgumentException">Выбрасывается, если канал не найден.</exception>
     public ChannelReport GenerateChannelReport(int channelId)
     {
         var channel = _context.StreamChannels

@@ -4,13 +4,18 @@ using StreamingPlatform.Models;
 namespace StreamingPlatform.Views;
 
 /// <summary>
-/// Логика взаимодействия для DonateHistoryPage.xaml
+/// Страница истории донатов с фильтрацией по каналу или общим списком.
 /// </summary>
 public partial class DonateHistoryPage : Page
 {
-    public DonateHistoryPage()
+    /// <summary>
+    /// Создаёт страницу истории донатов для указанного канала.
+    /// Если <paramref name="channelId"/> не задан, отображаются все донаты.
+    /// </summary>
+    /// <param name="channelId">Идентификатор канала (необязательный).</param>
+    public DonateHistoryPage(int? channelId = null)
     {
         InitializeComponent();
-        DataContext = new DonateHistoryViewModel();
+        DataContext = new DonateHistoryViewModel(channelId);
     }
 }

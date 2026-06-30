@@ -1,5 +1,4 @@
-﻿using System.Windows;
-using StreamingPlatformCore.Entities;
+﻿using StreamingPlatformCore.Entities;
 
 namespace StreamingPlatform.Models
 {
@@ -7,28 +6,27 @@ namespace StreamingPlatform.Models
     {
         public StreamChannelModel(string name, string description, int authorId) : base(name, description, authorId)
         {
-            OnInteract += (channel) => MessageBox.Show($"{channel.Name}");
         }
 
         public event Action<StreamChannel> OnInteract = delegate { };
 
         public static StreamChannelModel From(StreamChannel channel)
         {
-            var obj = new StreamChannelModel(channel.Name, channel.Description, channel.AuthorId);
-
-            return obj;
+            return new StreamChannelModel(channel.Name, channel.Description, channel.AuthorId)
+            {
+                Id = channel.Id,
+                CategoryId = channel.CategoryId,
+                SubscriberCount = channel.SubscriberCount,
+                Author = channel.Author,
+                Category = channel.Category,
+                Subscriptions = channel.Subscriptions,
+                LiveStreams = channel.LiveStreams
+            };
         }
 
         public static List<StreamChannelModel> From(List<StreamChannel> channels)
         {
-            var list = new List<StreamChannelModel>();
-
-            foreach (var channel in channels)
-            {
-                list.Add(From(channel));
-            }
-
-            return list;
+            return channels.Select(From).ToList();
         }
 
         public void Interact()

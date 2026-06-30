@@ -1,0 +1,62 @@
+﻿<Page x:Class="StreamingPlatform.Views.ChannelCardPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Карточка канала"
+      Background="{StaticResource BackgroundBrush}">
+    <Grid Margin="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Верхняя панель -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,8">
+            <Button Content="← Назад" Command="{Binding GoBackCommand}" Width="80"/>
+            <TextBlock Text="Детали канала" FontSize="22" FontWeight="Bold" Margin="10,0"/>
+        </StackPanel>
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <!-- Основная информация -->
+                <Border Background="White" CornerRadius="12" Padding="16" Margin="0,0,0,12"
+                        Effect="{StaticResource CardShadow}">
+                    <StackPanel>
+                        <TextBlock Text="{Binding ChannelName}" FontSize="24" FontWeight="Bold"/>
+                        <TextBlock Text="{Binding Description}" TextWrapping="Wrap" Margin="0,8,0,0" Foreground="#FF555555"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                            <TextBlock Text="Автор: " FontWeight="SemiBold"/>
+                            <TextBlock Text="{Binding AuthorName}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Подписчиков: " FontWeight="SemiBold"/>
+                            <TextBlock Text="{Binding SubscriberCount}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Кнопки действий -->
+                <WrapPanel Margin="0,0,0,12">
+                    <Button Content="💎 Подписаться" Command="{Binding SubscribeCommand}"/>
+                    <Button Content="📊 Сформировать отчёт" Command="{Binding GenerateReportCommand}"/>
+                    <Button Content="💰 История донатов" Command="{Binding ShowDonationHistoryCommand}"/>
+                    <Button Content="✏️ Редактировать" Command="{Binding EditChannelCommand}"/>
+                </WrapPanel>
+
+                <!-- Отчёт -->
+                <GroupBox Header="Отчёт по каналу"
+                          Visibility="{Binding Report, Converter={StaticResource NullToVis}}">
+                    <StackPanel>
+                        <TextBlock Text="{Binding Report.Category, StringFormat='Категория: {0}'}" Margin="0,4"/>
+                        <TextBlock Text="{Binding Report.TotalStreams, StringFormat='Всего стримов: {0}'}" Margin="0,4"/>
+                        <TextBlock Text="{Binding Report.AverageDuration, StringFormat='Средняя длительность: {0:F2} ч'}" Margin="0,4"/>
+                        <TextBlock Text="{Binding Report.ActiveSubscriptions, StringFormat='Активных подписок: {0}'}" Margin="0,4"/>
+                        <TextBlock Text="{Binding Report.SubscriptionRevenue, StringFormat='Доход от подписок: {0:C}'}" Margin="0,4"/>
+                        <TextBlock Text="{Binding Report.DonationRevenue, StringFormat='Доход от донатов: {0:C}'}" Margin="0,4"/>
+                        <TextBlock Text="{Binding Report.TotalRevenue, StringFormat='Общий доход: {0:C}'}"
+                                   FontWeight="Bold" FontSize="16" Margin="0,8,0,0"/>
+                    </StackPanel>
+                </GroupBox>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>

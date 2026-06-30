@@ -23,7 +23,7 @@ namespace StreamingPlatformTests
         [TearDown]
         public void Destruct()
         {
-            _context.Dispose();
+            ApplicationContext.ResetInstance();
             _context = null;
         }
 
@@ -100,6 +100,25 @@ namespace StreamingPlatformTests
 
             _context.StreamChannels.Add(channel);
             _context.SaveChanges();
+        }
+
+        [Test]
+        public void Test_CheckSubscriptionActive()
+        {
+            // Arrange
+            var channel = _context.StreamChannels
+                .Include(c => c.Subscriptions)
+                .First();
+            var activeSub = channel.Subscriptions.First(s => s.EndDate > DateTime.UtcNow);
+            var inactiveSub = channel.Subscriptions.First(s => s.EndDate <= DateTime.UtcNow);
+
+            // Act
+            bool isActive = activeSub.IsActive;
+            bool isInactive = inactiveSub.IsActive;
+
+            // Assert
+            Assert.IsTrue(isActive);
+            Assert.IsFalse(isInactive);
         }
 
         [Test]
